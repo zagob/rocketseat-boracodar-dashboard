@@ -3,6 +3,7 @@ import { GraphWeek } from "@/components/GraphWeek";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Inter } from "next/font/google";
 import Image from "next/image";
+import { ArrowClockwise } from "phosphor-react";
 import { useEffect, useState } from "react";
 
 import happySvg from "../assets/icons/happy.svg";
@@ -16,19 +17,7 @@ interface DataProps {
 
 export default function Home() {
   const [data, setData] = useState<DataProps[]>([]);
-  const [progressStartValue, setProgressStartValue] = useState(1);
-  const progressEndValue = 90;
-  const speed = 10;
-
-  useEffect(() => {
-    if (progressStartValue < progressEndValue) {
-      var progress = setInterval(() => {
-        setProgressStartValue((old) => old + 1);
-      }, speed);
-    }
-
-    return () => clearInterval(progress);
-  }, [progressStartValue, progressEndValue, speed]);
+  const [reloadData, setReloadData] = useState(false);
 
   useEffect(() => {
     const daysWeekData = Array.from({ length: 7 }).map((_, index) => ({
@@ -37,7 +26,8 @@ export default function Home() {
     }));
 
     setData(daysWeekData);
-  }, []);
+    setReloadData(false);
+  }, [reloadData === true]);
 
   return (
     <div className="py-[50px] px-[123px] h-screen" style={inter.style}>
@@ -57,11 +47,7 @@ export default function Home() {
             valueExpect="100"
             valueAchieved="70"
           >
-            <ProgressBar
-              startValue={progressStartValue}
-              startColor="#CE9FFC"
-              endColor="#7367F0"
-            />
+            <ProgressBar percent={70} startColor="#CE9FFC" endColor="#7367F0" />
           </Card>
           <Card
             title="Meta mensal"
@@ -69,17 +55,24 @@ export default function Home() {
             valueExpect="R$ 70K"
             valueAchieved="R$ 63K"
           >
-            <ProgressBar
-              startValue={progressStartValue}
-              startColor="#DF9780"
-              endColor="#A66DE9"
-            />
+            <ProgressBar percent={90} startColor="#DF9780" endColor="#A66DE9" />
           </Card>
         </div>
         <div className="bg-card h-[250px] rounded-2xl shadow-lg shadow-black/10 px-12 py-8 flex flex-col gap-4">
-          <h4 className="font-semibold text-2xl text-white">
-            Vendas por dia da semana
-          </h4>
+          <div className="flex items-center justify-between">
+            <h4 className="font-semibold text-2xl text-white">
+              Vendas por dia da semana
+            </h4>
+            <button
+              title="recarregar dados"
+              onClick={() => setReloadData(true)}
+            >
+              <ArrowClockwise
+                size={32}
+                className="text-green-500 hover:text-green-500/80 transition-all"
+              />
+            </button>
+          </div>
 
           {data.length > 0 && <GraphWeek daysWeek={data} />}
         </div>
