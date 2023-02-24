@@ -28,7 +28,7 @@ Foi criado como um desafio proposto pela plataforma de ensino Rocketseat.
 Além disso, foram implementados melhorias como
 - Animações aos gráficos
 <br>
-- <a href="">Acessar App</a>
+- <a href="https://rocketseat-boracodar-dashboard.vercel.app">Acessar App</a>
 
 ## 🚀 Instalação e uso
 
