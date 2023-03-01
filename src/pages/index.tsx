@@ -47,7 +47,12 @@ export default function Home() {
             valueExpect="100"
             valueAchieved="70"
           >
-            <ProgressBar percent={70} startColor="#CE9FFC" endColor="#7367F0" />
+            <ProgressBar
+              percent={70}
+              startColor="#CE9FFC"
+              endColor="#7367F0"
+              idColorGradient="graph1"
+            />
           </Card>
           <Card
             title="Meta mensal"
@@ -55,7 +60,12 @@ export default function Home() {
             valueExpect="R$ 70K"
             valueAchieved="R$ 63K"
           >
-            <ProgressBar percent={90} startColor="#DF9780" endColor="#A66DE9" />
+            <ProgressBar
+              percent={90}
+              startColor="#DF9780"
+              endColor="#A66DE9"
+              idColorGradient="graph2"
+            />
           </Card>
         </div>
         <div className="bg-card h-[250px] rounded-2xl shadow-lg shadow-black/10 px-12 py-8 flex flex-col gap-4">

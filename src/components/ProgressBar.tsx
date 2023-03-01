@@ -5,13 +5,15 @@ interface ProgressBarProps {
   speedAnimation?: number;
   startColor: string;
   endColor: string;
+  idColorGradient: string;
 }
 
 export function ProgressBar({
   endColor,
   startColor,
   percent,
-  speedAnimation = 20,
+  idColorGradient,
+  speedAnimation = 50,
 }: ProgressBarProps) {
   const [progress, setProgress] = useState(1);
 
@@ -26,18 +28,39 @@ export function ProgressBar({
   }, [progress]);
 
   return (
-    <div
-      style={{
-        background: `conic-gradient(${startColor}, ${endColor} ${
-          progress * 3.6
-        }deg, #474556 0deg)`,
-      }}
-      className="relative h-[197px] w-[197px] shadow-2xl shadow-black/40 rounded-full flex items-center justify-center before:content-[''] before:absolute before:h-[140px] before:w-[140px] before:bg-[#363447] before:rounded-full"
-    >
-      <div className="text-white flex flex-col items-center">
-        <span className="relative text-[34px] font-bold">{progress}%</span>
-        <span className="relative text-base">alcançada</span>
+    <div className=" relative">
+      <div className="w-[180px] h-[180px] flex items-center justify-center rounded-full bg-[#474556]">
+        <div className="w-[140px] h-[140px] inset-0 rounded-full bg-card text-white flex flex-col leading-none items-center justify-center">
+          <span className="relative text-[32px] font-bold">{progress}%</span>
+          <span className="relative text-base">alcançada</span>
+        </div>
       </div>
+
+      <svg
+        className="absolute top-0 left-0 rotate-[270deg]"
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        width="200px"
+        height="200px"
+      >
+        <defs>
+          <linearGradient id={idColorGradient}>
+            <stop offset="0%" stopColor={startColor} />
+            <stop offset="100%" stopColor={endColor} />
+          </linearGradient>
+        </defs>
+        <circle
+          className="fill-none"
+          stroke={`url(#${idColorGradient})`}
+          strokeWidth={20}
+          strokeDasharray={500}
+          strokeDashoffset={490 - (490 * progress) / 100}
+          cx="110"
+          cy="90"
+          r="80"
+          strokeLinecap="round"
+        />
+      </svg>
     </div>
   );
 }
